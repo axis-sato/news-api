@@ -376,7 +376,7 @@ func GorpMigrations(mods ...qm.QueryMod) gorpMigrationQuery {
 	return gorpMigrationQuery{NewQuery(mods...)}
 }
 
-// FindGorpMigration retrieves a single record by ID with an executor.
+// FindGorpMigration retrieves a single record by Id with an executor.
 // If selectCols is empty Find will return all columns.
 func FindGorpMigration(ctx context.Context, exec boil.ContextExecutor, iD string, selectCols ...string) (*GorpMigration, error) {
 	gorpMigrationObj := &GorpMigration{}

@@ -20,6 +20,7 @@ func NewArticleStore(db *sql.DB, ctx context.Context) *ArticleStore {
 	}
 }
 
+// TODO: LimitとAfterを渡せるようにする
 func (as *ArticleStore) GetAllArticles() ([]*entities.Article, error) {
 	articles, err := models.Articles(qm.Load(qm.Rels(models.ArticleRels.Site)), qm.Load(qm.Rels(models.ArticleRels.Tags))).All(as.ctx, as.db)
 	if err != nil {

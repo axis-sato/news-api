@@ -900,7 +900,7 @@ func Articles(mods ...qm.QueryMod) articleQuery {
 	return articleQuery{NewQuery(mods...)}
 }
 
-// FindArticle retrieves a single record by ID with an executor.
+// FindArticle retrieves a single record by Id with an executor.
 // If selectCols is empty Find will return all columns.
 func FindArticle(ctx context.Context, exec boil.ContextExecutor, iD uint, selectCols ...string) (*Article, error) {
 	articleObj := &Article{}

@@ -654,7 +654,7 @@ func Tags(mods ...qm.QueryMod) tagQuery {
 	return tagQuery{NewQuery(mods...)}
 }
 
-// FindTag retrieves a single record by ID with an executor.
+// FindTag retrieves a single record by Id with an executor.
 // If selectCols is empty Find will return all columns.
 func FindTag(ctx context.Context, exec boil.ContextExecutor, iD uint, selectCols ...string) (*Tag, error) {
 	tagObj := &Tag{}

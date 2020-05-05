@@ -530,7 +530,7 @@ func Sites(mods ...qm.QueryMod) siteQuery {
 	return siteQuery{NewQuery(mods...)}
 }
 
-// FindSite retrieves a single record by ID with an executor.
+// FindSite retrieves a single record by Id with an executor.
 // If selectCols is empty Find will return all columns.
 func FindSite(ctx context.Context, exec boil.ContextExecutor, iD uint, selectCols ...string) (*Site, error) {
 	siteObj := &Site{}

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"github.com/c8112002/news-api/db"
+	"github.com/c8112002/news-api/handler"
 	"github.com/c8112002/news-api/store"
 	"github.com/gofiber/fiber"
 	"github.com/volatiletech/sqlboiler/boil"
@@ -11,7 +12,6 @@ import (
 //go:generate sqlboiler --wipe --no-tests mysql --no-auto-timestamps
 
 func main() {
-	app := fiber.New()
 
 	boil.DebugMode = true
 
@@ -29,12 +29,9 @@ func main() {
 	ctx := context.Background()
 	as := store.NewArticleStore(d, ctx)
 
-	api := app.Group("/api")
-	v1 := api.Group("/v1")
-	v1.Get("/", func(c *fiber.Ctx) {
-		articles, _ := as.GetAllArticles()
-		_ = c.JSON(articles)
-	})
+	app := fiber.New()
+	h := handler.NewHandler(as)
+	h.Register(app)
 
 	_ = app.Listen(3001)
 }
