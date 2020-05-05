@@ -20,9 +20,19 @@ func NewArticleStore(db *sql.DB, ctx context.Context) *ArticleStore {
 	}
 }
 
-// TODO: LimitとAfterを渡せるようにする
-func (as *ArticleStore) GetAllArticles() ([]*entities.Article, error) {
-	articles, err := models.Articles(qm.Load(qm.Rels(models.ArticleRels.Site)), qm.Load(qm.Rels(models.ArticleRels.Tags))).All(as.ctx, as.db)
+func (as *ArticleStore) GetAllArticles(limit int, after uint) ([]*entities.Article, error) {
+	queries := []qm.QueryMod{
+		qm.Limit(limit),
+		qm.OrderBy(models.ArticleColumns.ID + " desc"),
+		qm.Load(qm.Rels(models.ArticleRels.Site)),
+		qm.Load(qm.Rels(models.ArticleRels.Tags)),
+	}
+
+	if after != 0 {
+		queries = append(queries, models.ArticleWhere.ID.LT(after))
+	}
+
+	articles, err := models.Articles(queries...).All(as.ctx, as.db)
 	if err != nil {
 		return nil, err
 	}
