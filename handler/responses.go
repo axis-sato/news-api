@@ -5,6 +5,11 @@ import (
 	"time"
 )
 
+const (
+	internalServerErrorCode =    "INTERNAL_SERVER_ERROR"
+	internalServerErrorMessage = "予期せぬエラーが発生しました。"
+)
+
 type articleResponse struct {
 	Id        uint           `json:"id"`
 	Title     string         `json:"title"`
@@ -83,3 +88,32 @@ func newSiteResponse(site *entities.Site) *siteResponse {
 		Name: site.Name,
 	}
 }
+
+type errorResponse struct {
+	Code string `json:"code"`
+	Message string `json:"message"`
+}
+
+func newErrorResponse(code string, message string) *errorResponse {
+	return &errorResponse{
+		Code:    code,
+		Message: message,
+	}
+}
+
+func newInternalServerErrorResponse() *errorsResponse {
+	resp := &errorResponse{
+		Code:    internalServerErrorCode,
+		Message: internalServerErrorMessage,
+	}
+	return newErrorsResponse([]*errorResponse{resp})
+}
+
+type errorsResponse struct {
+	Errors []*errorResponse `json:"errors"`
+}
+
+func newErrorsResponse(resp []*errorResponse) *errorsResponse {
+	return &errorsResponse{Errors: resp}
+}
+

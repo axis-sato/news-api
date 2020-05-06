@@ -6,10 +6,20 @@ import (
 	"github.com/c8112002/news-api/handler"
 	"github.com/c8112002/news-api/store"
 	"github.com/gofiber/fiber"
+	"github.com/gofiber/recover"
 	"github.com/volatiletech/sqlboiler/boil"
+	"os"
+
+	log "github.com/sirupsen/logrus"
 )
 
 //go:generate sqlboiler --wipe --no-tests mysql --no-auto-timestamps
+
+func init() {
+	log.SetLevel(log.DebugLevel)
+	log.SetReportCaller(true)
+	log.SetOutput(os.Stdout)
+}
 
 func main() {
 
@@ -30,6 +40,10 @@ func main() {
 	as := store.NewArticleStore(d, ctx)
 
 	app := fiber.New()
+	app.Use(recover.New(recover.Config{
+		Handler: handler.ErrorHandler,
+	}))
+
 	h := handler.NewHandler(as)
 	h.Register(app)
 

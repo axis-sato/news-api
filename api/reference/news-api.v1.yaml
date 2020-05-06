@@ -80,7 +80,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  error:
+                  errors:
                     type: array
                     items:
                       $ref: '#/components/schemas/Error'
