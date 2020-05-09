@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	devDataSourceName = "news_crawler:news_crawler_password@tcp(localhost:3309)/news_crawler?charset=utf8mb4&parseTime=True&loc=Local"
+	devDataSourceName = "news_crawler:news_crawler_password@tcp(host.docker.internal:3309)/news_crawler?charset=utf8mb4&parseTime=True&loc=Local"
 )
 
 func NewDB() (*sql.DB, error) {

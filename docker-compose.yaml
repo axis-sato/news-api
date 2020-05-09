@@ -14,3 +14,10 @@ services:
       - apparmor:unconfined
     cap_add:
       - SYS_PTRACE
+  generator:
+    build:
+      context: .
+      dockerfile: Dockerfile-generator
+    volumes:
+      - ./:/go/app
+    tty: true

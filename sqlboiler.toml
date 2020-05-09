@@ -1,6 +1,6 @@
 [mysql]
   dbname  = "news_crawler"
-  host    = "127.0.0.1"
+  host    = "host.docker.internal"
   port    = 3309
   user    = "news_crawler"
   pass    = "news_crawler_password"

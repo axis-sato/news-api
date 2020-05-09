@@ -2,13 +2,14 @@ package main
 
 import (
 	"context"
+	"os"
+
 	"github.com/c8112002/news-api/db"
 	"github.com/c8112002/news-api/handler"
 	"github.com/c8112002/news-api/store"
 	"github.com/gofiber/fiber"
 	"github.com/gofiber/recover"
 	"github.com/volatiletech/sqlboiler/boil"
-	"os"
 
 	log "github.com/sirupsen/logrus"
 )
