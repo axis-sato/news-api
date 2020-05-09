@@ -1,12 +1,13 @@
 package handler
 
 import (
-	"github.com/c8112002/news-api/entities"
 	"time"
+
+	"github.com/c8112002/news-api/entities"
 )
 
 const (
-	internalServerErrorCode =    "INTERNAL_SERVER_ERROR"
+	internalServerErrorCode    = "INTERNAL_SERVER_ERROR"
 	internalServerErrorMessage = "予期せぬエラーが発生しました。"
 )
 
@@ -41,16 +42,15 @@ type articlesResponse struct {
 }
 
 func newArticlesResponse(articles []*entities.Article) *articlesResponse {
-	var ar []*articleResponse
-	for _, a := range  articles {
+	ar := make([]*articleResponse, 0)
+	for _, a := range articles {
 		ar = append(ar, newArticleResponse(a))
 	}
 	return &articlesResponse{Articles: ar}
 }
 
-
 type tagResponse struct {
-	ID uint `json:"id"`
+	ID   uint   `json:"id"`
 	Name string `json:"name"`
 }
 
@@ -62,9 +62,9 @@ func newTagResponse(t *entities.Tag) *tagResponse {
 }
 
 func newTagSliceResponse(tags []*entities.Tag) []*tagResponse {
-	var tr []*tagResponse
+	tr := make([]*tagResponse, 0)
 	for _, t := range tags {
-		tr= append(tr, newTagResponse(t))
+		tr = append(tr, newTagResponse(t))
 	}
 	return tr
 }
@@ -78,7 +78,7 @@ func newTagsResponse(tags []*entities.Tag) *tagsResponse {
 }
 
 type siteResponse struct {
-	ID uint `json:"id"`
+	ID   uint   `json:"id"`
 	Name string `json:"name"`
 }
 
@@ -90,7 +90,7 @@ func newSiteResponse(site *entities.Site) *siteResponse {
 }
 
 type errorResponse struct {
-	Code string `json:"code"`
+	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
@@ -116,4 +116,3 @@ type errorsResponse struct {
 func newErrorsResponse(resp []*errorResponse) *errorsResponse {
 	return &errorsResponse{Errors: resp}
 }
-

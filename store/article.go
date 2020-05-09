@@ -3,13 +3,14 @@ package store
 import (
 	"context"
 	"database/sql"
+
 	"github.com/c8112002/news-api/entities"
 	"github.com/c8112002/news-api/models"
 	"github.com/volatiletech/sqlboiler/queries/qm"
 )
 
 type ArticleStore struct {
-	db *sql.DB
+	db  *sql.DB
 	ctx context.Context
 }
 
@@ -51,4 +52,3 @@ func (as *ArticleStore) GetAllArticles(limit int, after uint) ([]*entities.Artic
 func newArticleImage(image string) *entities.ArticleImage {
 	return entities.NewArticleImage(image)
 }
-
