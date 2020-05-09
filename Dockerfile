@@ -11,7 +11,7 @@ RUN set -ex \
     && apk add --no-cache git curl \
     && curl -fLo /go/bin/air https://git.io/linux_air \
     && chmod +x /go/bin/air \
-    && go get -u github.com/go-delve/delve/cmd/dlv
+    && go get -u -v github.com/go-delve/delve/cmd/dlv
 
 ENV GO111MODULE=on
 

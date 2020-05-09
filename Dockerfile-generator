@@ -2,12 +2,8 @@ FROM golang:1.14.2-alpine
 
 WORKDIR /go/app
 
-ENV GO111MODULE=off
-
 RUN set -ex \
     && apk update \
     && apk add --no-cache git \
     && go get -u -v github.com/volatiletech/sqlboiler \
     && go get -u -v github.com/volatiletech/sqlboiler/drivers/sqlboiler-mysql
-
-ENV GO111MODULE=on

@@ -9,7 +9,7 @@ import (
 	"github.com/c8112002/news-api/store"
 	"github.com/gofiber/fiber"
 	"github.com/gofiber/recover"
-	"github.com/volatiletech/sqlboiler/boil"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 
 	log "github.com/sirupsen/logrus"
 )

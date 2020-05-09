@@ -6,7 +6,7 @@ import (
 
 	"github.com/c8112002/news-api/entities"
 	"github.com/c8112002/news-api/models"
-	"github.com/volatiletech/sqlboiler/queries/qm"
+	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 )
 
 type ArticleStore struct {
