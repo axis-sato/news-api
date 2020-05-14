@@ -16,7 +16,7 @@ type articleResponse struct {
 	Title     string         `json:"title"`
 	URL       string         `json:"url"`
 	Image     string         `json:"image,omitempty"`
-	CrawlerAt time.Time      `json:"crawled_at"`
+	CrawlerAt time.Time      `json:"crawledAt"`
 	Tags      []*tagResponse `json:"tags"`
 	Site      *siteResponse  `json:"site"`
 }
