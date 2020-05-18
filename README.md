@@ -1,4 +1,4 @@
-# Crawler API
+# News API
 
 ## Getting started
 
