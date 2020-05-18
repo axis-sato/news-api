@@ -80,12 +80,14 @@ func newTagsResponse(tags []*entities.Tag) *tagsResponse {
 type siteResponse struct {
 	ID   uint   `json:"id"`
 	Name string `json:"name"`
+	URL  string `json:"url"`
 }
 
 func newSiteResponse(site *entities.Site) *siteResponse {
 	return &siteResponse{
 		ID:   site.ID,
 		Name: site.Name,
+		URL:  site.URL,
 	}
 }
 
