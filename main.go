@@ -3,15 +3,15 @@ package main
 import (
 	"context"
 	"os"
+	"time"
 
 	"github.com/c8112002/news-api/db"
 	"github.com/c8112002/news-api/handler"
 	"github.com/c8112002/news-api/store"
 	"github.com/gofiber/fiber"
 	"github.com/gofiber/recover"
-	"github.com/volatiletech/sqlboiler/v4/boil"
-
 	log "github.com/sirupsen/logrus"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 
 //go:generate sqlboiler --wipe --no-tests mysql --no-auto-timestamps
@@ -20,11 +20,13 @@ func init() {
 	log.SetLevel(log.DebugLevel)
 	log.SetReportCaller(true)
 	log.SetOutput(os.Stdout)
+	time.Local = time.FixedZone("Asia/Tokyo", 9*60*60)
 }
 
 func main() {
 
 	boil.DebugMode = true
+	boil.SetLocation(time.Local)
 
 	d, err := db.NewDB()
 	if err != nil {
