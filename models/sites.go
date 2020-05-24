@@ -363,7 +363,7 @@ func (o *Site) Articles(mods ...qm.QueryMod) articleQuery {
 	}
 
 	queryMods = append(queryMods,
-		qm.Where("`articles`.`sites_id`=?", o.ID),
+		qm.Where("`articles`.`site_id`=?", o.ID),
 	)
 
 	query := Articles(queryMods...)
@@ -417,7 +417,7 @@ func (siteL) LoadArticles(ctx context.Context, e boil.ContextExecutor, singular 
 
 	query := NewQuery(
 		qm.From(`articles`),
-		qm.WhereIn(`articles.sites_id in ?`, args...),
+		qm.WhereIn(`articles.site_id in ?`, args...),
 	)
 	if mods != nil {
 		mods.Apply(query)
@@ -460,7 +460,7 @@ func (siteL) LoadArticles(ctx context.Context, e boil.ContextExecutor, singular 
 
 	for _, foreign := range resultSlice {
 		for _, local := range slice {
-			if local.ID == foreign.SitesID {
+			if local.ID == foreign.SiteID {
 				local.R.Articles = append(local.R.Articles, foreign)
 				if foreign.R == nil {
 					foreign.R = &articleR{}
@@ -482,14 +482,14 @@ func (o *Site) AddArticles(ctx context.Context, exec boil.ContextExecutor, inser
 	var err error
 	for _, rel := range related {
 		if insert {
-			rel.SitesID = o.ID
+			rel.SiteID = o.ID
 			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
 				return errors.Wrap(err, "failed to insert into foreign table")
 			}
 		} else {
 			updateQuery := fmt.Sprintf(
 				"UPDATE `articles` SET %s WHERE %s",
-				strmangle.SetParamNames("`", "`", 0, []string{"sites_id"}),
+				strmangle.SetParamNames("`", "`", 0, []string{"site_id"}),
 				strmangle.WhereClause("`", "`", 0, articlePrimaryKeyColumns),
 			)
 			values := []interface{}{o.ID, rel.ID}
@@ -503,7 +503,7 @@ func (o *Site) AddArticles(ctx context.Context, exec boil.ContextExecutor, inser
 				return errors.Wrap(err, "failed to update foreign table")
 			}
 
-			rel.SitesID = o.ID
+			rel.SiteID = o.ID
 		}
 	}
 

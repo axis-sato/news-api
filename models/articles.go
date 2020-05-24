@@ -29,7 +29,7 @@ type Article struct {
 	URL        string      `boil:"url" json:"url" toml:"url" yaml:"url"`
 	Image      null.String `boil:"image" json:"image,omitempty" toml:"image" yaml:"image,omitempty"`
 	CrawledAt  time.Time   `boil:"crawled_at" json:"crawled_at" toml:"crawled_at" yaml:"crawled_at"`
-	SitesID    uint        `boil:"sites_id" json:"sites_id" toml:"sites_id" yaml:"sites_id"`
+	SiteID     uint        `boil:"site_id" json:"site_id" toml:"site_id" yaml:"site_id"`
 	OriginalID string      `boil:"original_id" json:"original_id" toml:"original_id" yaml:"original_id"`
 
 	R *articleR `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -42,7 +42,7 @@ var ArticleColumns = struct {
 	URL        string
 	Image      string
 	CrawledAt  string
-	SitesID    string
+	SiteID     string
 	OriginalID string
 }{
 	ID:         "id",
@@ -50,7 +50,7 @@ var ArticleColumns = struct {
 	URL:        "url",
 	Image:      "image",
 	CrawledAt:  "crawled_at",
-	SitesID:    "sites_id",
+	SiteID:     "site_id",
 	OriginalID: "original_id",
 }
 
@@ -152,7 +152,7 @@ var ArticleWhere = struct {
 	URL        whereHelperstring
 	Image      whereHelpernull_String
 	CrawledAt  whereHelpertime_Time
-	SitesID    whereHelperuint
+	SiteID     whereHelperuint
 	OriginalID whereHelperstring
 }{
 	ID:         whereHelperuint{field: "`articles`.`id`"},
@@ -160,7 +160,7 @@ var ArticleWhere = struct {
 	URL:        whereHelperstring{field: "`articles`.`url`"},
 	Image:      whereHelpernull_String{field: "`articles`.`image`"},
 	CrawledAt:  whereHelpertime_Time{field: "`articles`.`crawled_at`"},
-	SitesID:    whereHelperuint{field: "`articles`.`sites_id`"},
+	SiteID:     whereHelperuint{field: "`articles`.`site_id`"},
 	OriginalID: whereHelperstring{field: "`articles`.`original_id`"},
 }
 
@@ -188,8 +188,8 @@ func (*articleR) NewStruct() *articleR {
 type articleL struct{}
 
 var (
-	articleAllColumns            = []string{"id", "title", "url", "image", "crawled_at", "sites_id", "original_id"}
-	articleColumnsWithoutDefault = []string{"title", "url", "image", "crawled_at", "sites_id", "original_id"}
+	articleAllColumns            = []string{"id", "title", "url", "image", "crawled_at", "site_id", "original_id"}
+	articleColumnsWithoutDefault = []string{"title", "url", "image", "crawled_at", "site_id", "original_id"}
 	articleColumnsWithDefault    = []string{"id"}
 	articlePrimaryKeyColumns     = []string{"id"}
 )
@@ -472,7 +472,7 @@ func (q articleQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bo
 // Site pointed to by the foreign key.
 func (o *Article) Site(mods ...qm.QueryMod) siteQuery {
 	queryMods := []qm.QueryMod{
-		qm.Where("`id` = ?", o.SitesID),
+		qm.Where("`id` = ?", o.SiteID),
 	}
 
 	queryMods = append(queryMods, mods...)
@@ -522,7 +522,7 @@ func (articleL) LoadSite(ctx context.Context, e boil.ContextExecutor, singular b
 		if object.R == nil {
 			object.R = &articleR{}
 		}
-		args = append(args, object.SitesID)
+		args = append(args, object.SiteID)
 
 	} else {
 	Outer:
@@ -532,12 +532,12 @@ func (articleL) LoadSite(ctx context.Context, e boil.ContextExecutor, singular b
 			}
 
 			for _, a := range args {
-				if a == obj.SitesID {
+				if a == obj.SiteID {
 					continue Outer
 				}
 			}
 
-			args = append(args, obj.SitesID)
+			args = append(args, obj.SiteID)
 
 		}
 	}
@@ -595,7 +595,7 @@ func (articleL) LoadSite(ctx context.Context, e boil.ContextExecutor, singular b
 
 	for _, local := range slice {
 		for _, foreign := range resultSlice {
-			if local.SitesID == foreign.ID {
+			if local.SiteID == foreign.ID {
 				local.R.Site = foreign
 				if foreign.R == nil {
 					foreign.R = &siteR{}
@@ -737,7 +737,7 @@ func (o *Article) SetSite(ctx context.Context, exec boil.ContextExecutor, insert
 
 	updateQuery := fmt.Sprintf(
 		"UPDATE `articles` SET %s WHERE %s",
-		strmangle.SetParamNames("`", "`", 0, []string{"sites_id"}),
+		strmangle.SetParamNames("`", "`", 0, []string{"site_id"}),
 		strmangle.WhereClause("`", "`", 0, articlePrimaryKeyColumns),
 	)
 	values := []interface{}{related.ID, o.ID}
@@ -751,7 +751,7 @@ func (o *Article) SetSite(ctx context.Context, exec boil.ContextExecutor, insert
 		return errors.Wrap(err, "failed to update local table")
 	}
 
-	o.SitesID = related.ID
+	o.SiteID = related.ID
 	if o.R == nil {
 		o.R = &articleR{
 			Site: related,

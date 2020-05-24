@@ -461,7 +461,7 @@ func (tagL) LoadArticles(ctx context.Context, e boil.ContextExecutor, singular b
 		one := new(Article)
 		var localJoinCol uint
 
-		err = results.Scan(&one.ID, &one.Title, &one.URL, &one.Image, &one.CrawledAt, &one.SitesID, &one.OriginalID, &localJoinCol)
+		err = results.Scan(&one.ID, &one.Title, &one.URL, &one.Image, &one.CrawledAt, &one.SiteID, &one.OriginalID, &localJoinCol)
 		if err != nil {
 			return errors.Wrap(err, "failed to scan eager loaded results for articles")
 		}
