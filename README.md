@@ -1,5 +1,7 @@
 # News API
 
+![Deploy API](https://github.com/c8112002/news-api/workflows/Deploy%20API/badge.svg)
+
 ## Getting started
 
 ### dev
