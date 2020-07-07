@@ -21,6 +21,6 @@ generating
 
 running server
 ```bash
-docker build -t news-api .
-docker run -p 3001:3001 news-api
+./bin/build.sh
+./bin/api.sh
 ```
