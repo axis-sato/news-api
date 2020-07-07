@@ -29,7 +29,7 @@ COPY --from=build /go/app/configs/dbconf.yml ./configs/
 
 RUN addgroup go \
     && adduser -D -G go go \
-    && chown -R go:go /app/api
+    && chown -R go:go /app/api \
     && chown -R go:go /app/configs/dbconf.yml
 
 CMD ["./api"]
