@@ -22,10 +22,14 @@ FROM alpine
 
 WORKDIR /app
 
+ENV APP_ENV=production
+
 COPY --from=build /go/app/build/api .
+COPY --from=build /go/app/configs/dbconf.yml ./configs/
 
 RUN addgroup go \
     && adduser -D -G go go \
     && chown -R go:go /app/api
+    && chown -R go:go /app/configs/dbconf.yml
 
 CMD ["./api"]

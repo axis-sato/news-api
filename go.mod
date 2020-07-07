@@ -8,8 +8,10 @@ require (
 	github.com/gofiber/fiber v1.9.6
 	github.com/gofiber/recover v0.0.5
 	github.com/gofrs/uuid v3.3.0+incompatible // indirect
+	github.com/joho/godotenv v1.3.0
 	github.com/klauspost/compress v1.10.6 // indirect
 	github.com/sirupsen/logrus v1.6.0
+	github.com/spf13/viper v1.7.0
 	github.com/valyala/fasthttp v1.13.1 // indirect
 	github.com/volatiletech/null/v8 v8.1.0
 	github.com/volatiletech/sqlboiler/v4 v4.1.2
